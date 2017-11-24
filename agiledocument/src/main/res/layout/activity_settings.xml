@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="schoolofnet.com.agiledocument.SettingsActivity">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="14dp"
+        android:text="IpAddress"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+    <EditText
+        android:textStyle="italic"
+        android:id="@+id/txtIpAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:ems="10"
+        android:inputType="textUri"
+        android:hint="Ex::. 192.168.1.123:3000"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btn_save_ipaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtIpAddress"
+        android:background="@color/colorPrimary"
+        android:text="Salvar Ip"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/cardview_light_background" />
+
+    <Button
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_save_ipaddress"
+        android:background="@color/colorPrimary"
+        android:text="teste"
+        android:textColor="@color/cardview_light_background" />
+
+
+</RelativeLayout>
