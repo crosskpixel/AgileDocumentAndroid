@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/agiledocument/app.iml" filepath="$PROJECT_DIR$/agiledocument/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/teste-android.iml" filepath="$PROJECT_DIR$/teste-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AgileDocumentAndroid.iml" filepath="$PROJECT_DIR$/AgileDocumentAndroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/agiledocument/agiledocument.iml" filepath="$PROJECT_DIR$/agiledocument/agiledocument.iml" />
+      <module fileurl="file://C:\Users\Mactus\Documents\AndroidProject\AgileDocumentAndroid\agiledocument\app.iml" filepath="C:\Users\Mactus\Documents\AndroidProject\AgileDocumentAndroid\agiledocument\app.iml" />
+      <module fileurl="file://C:\Users\Mactus\Documents\AndroidProject\AgileDocumentAndroid\teste-android.iml" filepath="C:\Users\Mactus\Documents\AndroidProject\AgileDocumentAndroid\teste-android.iml" />
     </modules>
   </component>
 </project>

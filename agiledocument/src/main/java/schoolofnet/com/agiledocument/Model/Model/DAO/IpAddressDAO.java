@@ -26,22 +26,26 @@ public class IpAddressDAO {
     }
 
     public boolean findAddressValid(String ip) {
-        try {
-            OkHttpClient.Builder b = new OkHttpClient.Builder();
-            b.connectTimeout(290, TimeUnit.MILLISECONDS);
-            OkHttpClient client = b.build();
-            ip = "http://" + ip;
-            Request request = new Request.Builder().url(ip+"/connect").get().build();
-            Response response = client.newCall(request).execute();
-            String res = response.body().string();
-            if (res.equals("true")) {
-                saveIpAdress(ip);
-                return true;
-            } else {
+        if (ip.length() > 4) {
+            try {
+                OkHttpClient.Builder b = new OkHttpClient.Builder();
+                b.connectTimeout(290, TimeUnit.MILLISECONDS);
+                OkHttpClient client = b.build();
+                ip = "http://" + ip;
+                Request request = new Request.Builder().url(ip + "/connect").get().build();
+                Response response = client.newCall(request).execute();
+                String res = response.body().string();
+                if (res.equals("true")) {
+                    saveIpAdress(ip);
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
                 return false;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
             return false;
         }
     }
