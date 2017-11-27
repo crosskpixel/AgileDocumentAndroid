@@ -1,6 +1,7 @@
 package schoolofnet.com.agiledocument;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Window;
@@ -26,6 +27,7 @@ public class DecoderActivity extends AppCompatActivity implements ZBarScannerVie
         this.ipDAO = new IpAddressDAO(handler);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_decoder);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         scan();
     }
 
@@ -41,23 +43,41 @@ public class DecoderActivity extends AppCompatActivity implements ZBarScannerVie
         this.zbar.stopCamera();
         Http http = new Http();
         System.out.println(result.getContents());
-        String url = this.ipDAO.getIpAddress() + "/getCampos/" + result.getContents();
-        System.out.println("@@@@@@@URL@@@@@@@@@@");
-        System.out.println(url);
-        System.out.println("@@@@@@@URL@@@@@@@@@@");
+        String url = this.ipDAO.getIpAddress() + "/getFields/" + result.getContents();
         http.builder(url);
-        http.GET();
-        String resultado = http.getResult();
-        System.out.println("@@@@@@@Resultado@@@@@@@@@@");
-        System.out.println(resultado);
-        System.out.println("@@@@@@@Resultado@@@@@@@@@@");
-        if (resultado != "false") {
-            System.out.println(resultado + "\n ^^^^linha 50");
-            Intent intent = new Intent(this, DocumentActivity.class);
-            intent.putExtra("documento", resultado);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Documento não encontrado", Toast.LENGTH_SHORT).show();
+        try {
+            http.GET();
+            String resultado = http.getResult();
+            System.out.println(resultado);
+            if (resultado != "false" && resultado != null) {
+                Intent intent = new Intent(this, DocumentActivity.class);
+                intent.putExtra("documento", resultado);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Documento não encontrado", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.zbar.stopCamera();
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.zbar.stopCamera();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.zbar.startCamera();
     }
 }

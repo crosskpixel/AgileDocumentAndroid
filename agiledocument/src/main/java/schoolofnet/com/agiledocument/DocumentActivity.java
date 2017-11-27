@@ -1,6 +1,7 @@
 package schoolofnet.com.agiledocument;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -58,6 +59,7 @@ public class DocumentActivity extends AppCompatActivity {
         DbHandler handler = new DbHandler(this);
         this.ipDAO = new IpAddressDAO(handler);
         setContentView(R.layout.activity_document);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         this.ViewDocumentos = findViewById(R.id.documentos);
         this.img = findViewById(R.id.img);
@@ -67,7 +69,6 @@ public class DocumentActivity extends AppCompatActivity {
     private void init() {
         try {
             String resultado = getIntent().getStringExtra("documento");
-            System.out.println(resultado + "linha 67");
             JsonParser parser = new JsonParser();
             this.documentoJson = new JsonArray();
             this.documentoJson = (JsonArray) parser.parse(resultado);
@@ -86,7 +87,6 @@ public class DocumentActivity extends AppCompatActivity {
             System.out.println(arquivo);
             if (!arquivo) {
                 String url = this.ipDAO.getIpAddress() + "/getFile/" + identificador;
-                System.out.println(url + "\n ^^ linha 86 url");
                 try {
                     Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(url).getContent());
                     setCardViewWithImage(bitmap, nomeDoc);
@@ -213,7 +213,7 @@ public class DocumentActivity extends AppCompatActivity {
             Uri uri = Uri.fromFile(new File(this.caminhoPhotoCurrent));
             int color = new Color().rgb(32, 46, 174);
             AlertDialog alertConfirmaCorte = new AlertDialog.Builder(this)
-                    .setTitle("SRI")
+                    .setTitle("Agile Document")
                     .setMessage("Deseja recortar este documento ?")
                     .setPositiveButton("Sim", (dialog, swith) -> {
                         dialog.dismiss();
@@ -224,7 +224,7 @@ public class DocumentActivity extends AppCompatActivity {
                         // options.setToolbarWidgetColor(color);
                         options.setActiveWidgetColor(color);
                         options.setToolbarColor(color); //Cor da barra Superior
-                        options.setToolbarTitle("SRI");
+                        options.setToolbarTitle("Agile Document");
                         UCrop.of(uri, uri).withOptions(options).start(this);
                     })
                     .setNegativeButton("Não", (dialog, swith) -> {

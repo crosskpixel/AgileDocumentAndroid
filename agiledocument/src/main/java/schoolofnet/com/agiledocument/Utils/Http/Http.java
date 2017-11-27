@@ -50,8 +50,7 @@ public class Http {
             Response response = okClient.newCall(request).execute();
             this.resultado = response.body().string();
         } catch (Exception e) {
-            System.out.println("Line 53 Http");
-            e.printStackTrace();
+           new Exception("Falha na conexão");
         }
     }
 

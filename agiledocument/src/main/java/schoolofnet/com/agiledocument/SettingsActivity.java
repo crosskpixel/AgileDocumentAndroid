@@ -1,5 +1,6 @@
 package schoolofnet.com.agiledocument;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ import schoolofnet.com.agiledocument.Utils.database.DbHandler;
 public class SettingsActivity extends AppCompatActivity {
 
     private Button btn_save_ipAddress;
-    private Button test;
     private EditText txtIpAddress;
 
     private String actualIpAddress;
@@ -26,10 +26,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        this.test = findViewById(R.id.test);
         this.txtIpAddress = findViewById(R.id.txtIpAddress);
         this.btn_save_ipAddress = findViewById(R.id.btn_save_ipaddress);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         DbHandler db = new DbHandler(this);
         IpAddressDAO ipDAO = new IpAddressDAO(db);
         this.actualIpAddress = ipDAO.getIpAddress();
@@ -37,7 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
             this.btn_save_ipAddress.setEnabled(false);
             this.btn_save_ipAddress.setBackgroundColor(Color.parseColor("#9ba9ff"));
         } else {
-            this.txtIpAddress.setText(this.actualIpAddress.replace("http://",""));
+            this.txtIpAddress.setText(this.actualIpAddress.replace("http://", ""));
         }
         init();
     }
@@ -68,13 +67,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        this.test.setOnClickListener((view) -> {
-            DbHandler handler = new DbHandler(this);
-            IpAddressDAO ipDAO = new IpAddressDAO(handler);
-            System.out.println(ipDAO.getIpAddress());
-        });
-
-
     }
 
     private void verificaCampoIpAdress() {
@@ -100,11 +92,7 @@ public class SettingsActivity extends AppCompatActivity {
                     onBackPressed();
                 } else {
                     this.txtIpAddress.setText("");
-                    if (ip.contains(":")) {
-                        Toast.makeText(this, "This ip not is Valid", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(this, "Port not search !!!", Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(this, "I could not find the server for this address", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
