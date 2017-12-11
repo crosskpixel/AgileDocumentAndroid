@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtIpAddress"
         android:background="@color/colorPrimary"
-        android:text="Salvar Ip"
+        android:text="SAVE IP"
         android:textSize="18dp"
         android:textStyle="bold"
         android:textColor="@color/cardview_light_background" />

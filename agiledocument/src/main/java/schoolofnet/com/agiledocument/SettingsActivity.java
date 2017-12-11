@@ -32,7 +32,8 @@ public class SettingsActivity extends AppCompatActivity {
         DbHandler db = new DbHandler(this);
         IpAddressDAO ipDAO = new IpAddressDAO(db);
         this.actualIpAddress = ipDAO.getIpAddress();
-        if (this.actualIpAddress.length() == 0 || this.actualIpAddress == null) {
+        if (this.actualIpAddress.length() == 0 || this.actualIpAddress == null || this.actualIpAddress == "null") {
+            this.txtIpAddress.setText("");
             this.btn_save_ipAddress.setEnabled(false);
             this.btn_save_ipAddress.setBackgroundColor(Color.parseColor("#9ba9ff"));
         } else {
@@ -65,17 +66,6 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
-
-
-    }
-
-    private void verificaCampoIpAdress() {
-        String ip = this.txtIpAddress.getText().toString();
-        if (ip == "") {
-            this.btn_save_ipAddress.setEnabled(false);
-        } else {
-            this.btn_save_ipAddress.setEnabled(true);
-        }
     }
 
     private void processIpAddress(View view) {

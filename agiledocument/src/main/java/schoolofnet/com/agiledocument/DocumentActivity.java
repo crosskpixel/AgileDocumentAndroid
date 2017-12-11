@@ -14,17 +14,21 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.yalantis.ucrop.UCrop;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -106,31 +110,48 @@ public class DocumentActivity extends AppCompatActivity {
         cardView.setId(id_view);
 
         CardView.LayoutParams lp = new CardView.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 40, 0, 1);
+        lp.setMargins(0, 0, 0, 20);
         cardView.setLayoutParams(lp);
 
         //Title
         LinearLayout linhaTitle = new LinearLayout(this);
-        linhaTitle.setLayoutParams(new LinearLayout.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.WRAP_CONTENT));
+        linhaTitle.setLayoutParams(new LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.WRAP_CONTENT));
         linhaTitle.setOrientation(LinearLayout.VERTICAL);
+        linhaTitle.setPadding(80, 3, 80, 3);
+        linhaTitle.setGravity(Gravity.CENTER);
+
+
         TextView name = new TextView(this);
+        name.setTextColor(Color.rgb(73, 96, 241));
         name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         name.setTextSize(18);
         name.setText(nomeDoc);
         //Final Title
 
         //TextView
-
-        TextView txtNull = new TextView(this);
-        txtNull.setText("Não foi encontrado nenhuma Imagem !!!");
-        txtNull.setTextSize(10);
+        Button txtNull = new Button(this);
+        txtNull.setEnabled(false);
+        txtNull.setText("Não foi encontrado nenhuma Imagem");
+        txtNull.setTextSize(9);
+        txtNull.setTextColor(Color.rgb(0, 0, 0));
         txtNull.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        txtNull.setBackgroundColor(Color.GRAY);
+        txtNull.setBackgroundColor(Color.rgb(255, 204, 0));
+        txtNull.setGravity(Gravity.CENTER);
+        LayoutParams lp_txtNull = new LayoutParams(LayoutParams.MATCH_PARENT,50);
+        txtNull.setLayoutParams(lp_txtNull);
+        txtNull.setBackgroundResource(R.drawable.buttonborderallyellow);
+
 
         Button btn_cad = new Button(this);
         btn_cad.setText("CAPTURAR");
+        btn_cad.setTextSize(16);
+        btn_cad.setTextColor(Color.rgb(255, 255, 255));
         btn_cad.setBackgroundResource(R.color.colorPrimary);
         btn_cad.setOnClickListener((view) -> captureImage(view, id_view));
+        btn_cad.setBackgroundResource(R.drawable.buttonborderallblue);
+        LayoutParams lp_btn_cad = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        btn_cad.setLayoutParams(lp_btn_cad);
+
 
         //Final TextView
         linhaTitle.addView(name);
@@ -144,7 +165,7 @@ public class DocumentActivity extends AppCompatActivity {
     private void setCardViewWithImage(Bitmap image, String nomeDoc) {
         CardView cardView = new CardView(this);
         CardView.LayoutParams lp = new CardView.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.WRAP_CONTENT);
-        lp.setMargins(0, 40, 0, 1);
+        lp.setMargins(0, 0, 0, 20);
         cardView.setLayoutParams(lp);
 
         //Title
@@ -152,15 +173,25 @@ public class DocumentActivity extends AppCompatActivity {
         linhaTitle.setLayoutParams(new CardView.LayoutParams(CardView.LayoutParams.MATCH_PARENT, CardView.LayoutParams.WRAP_CONTENT));
         linhaTitle.setOrientation(LinearLayout.VERTICAL);
         linhaTitle.setGravity(Gravity.CENTER);
+
         TextView name = new TextView(this);
+        name.setTextColor(Color.rgb(73, 96, 241));
         name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         name.setTextSize(18);
         name.setText(nomeDoc);
+
+        LayoutParams lp_name = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        lp_name.setMargins(0, 0, 0, 5);
+        name.setLayoutParams(lp_name);
         //Final Title
+
         //ImageView
         ImageView img = new ImageView(this);
         img.setImageBitmap(image);
-        img.setLayoutParams(new android.view.ViewGroup.LayoutParams(600, 500));
+        LayoutParams lp_img = new LayoutParams(600, 500);
+        lp_img.setMargins(0,10,0,0);
+        img.setLayoutParams(lp_img);
+
 
         //Final ImageView
         linhaTitle.addView(name);
@@ -274,22 +305,26 @@ public class DocumentActivity extends AppCompatActivity {
         String campo = jsonElement_documento.getAsJsonObject().get("nome").getAsString();
         CardView cardView = findViewById(pos_array_Documents);
         cardView.removeAllViews();
+
         LinearLayout linear = new LinearLayout(this);
-        linear.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        linear.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         linear.setOrientation(LinearLayout.VERTICAL);
         linear.setGravity(Gravity.CENTER);
+
         TextView txtCampo = new TextView(this);
         txtCampo.setText(campo);
+        txtCampo.setTextColor(Color.rgb(73, 96, 241));
         txtCampo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         txtCampo.setTextSize(18);
         linear.addView(txtCampo);
         ImageView img = new ImageView(this);
         img.setImageURI(Uri.fromFile(imageForSet));
-        img.setLayoutParams(new android.view.ViewGroup.LayoutParams(600, 500));
+        LayoutParams lp_img = new LayoutParams(600,500);
+        lp_img.setMargins(0,0,0,10);
+        img.setLayoutParams(lp_img);
         linear.addView(img);
         cardView.addView(linear);
     }
-
 
     @Override
     protected void onRestart() {
@@ -300,11 +335,11 @@ public class DocumentActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_out, R.anim.slide_out);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
 }
